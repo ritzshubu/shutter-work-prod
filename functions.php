@@ -2977,8 +2977,23 @@ function product_custom_content() {
 								<label>Central</label>
 							</div>
 							<div class="col text-center">
-								<img class="clicktoact get_dev_tilt" src="<?php echo get_stylesheet_directory_uri().'/assets/product-images/combine-images/single-or-split-tilt-rod/1.png';?>">
+								<img class="clicktoact get_dev_tilt" src="<?php echo get_stylesheet_directory_uri().'/assets/product-images/combine-images/number-of-frame-sides/2.png';?>">
 								<label>Hidden</label>
+							</div>
+							<div class="col text-center"></div>
+						</div>
+					<?php } ?>
+					<?php if ( get_the_id() !== 9452 ) { ?>
+						<div class="row">
+							<div class="col-sm-12 tabheading"> <h4>-Split or Single Tilt Rod</h4></div>
+							<div class="col text-center"></div>
+							<div class="col text-center">
+								<img class="clicktoact get_dev_tilt_split" src="<?php echo get_stylesheet_directory_uri().'/assets/product-images/combine-images/single-or-split-tilt-rod/0.png';?>">
+								<label>Split</label>
+							</div>
+							<div class="col text-center">
+								<img class="clicktoact get_dev_tilt_split" src="<?php echo get_stylesheet_directory_uri().'/assets/product-images/combine-images/single-or-split-tilt-rod/1.png';?>">
+								<label>Single Tilt</label>
 							</div>
 							<div class="col text-center"></div>
 						</div>
@@ -3032,21 +3047,6 @@ function product_custom_content() {
 							<div class="col text-center"></div>
 						</div>
 						<!--Slide 2 Left end -->
-						<?php if ( get_the_id() !== 9452 ) { ?>
-						<div class="row">
-							<div class="col-sm-12 tabheading"> <h4>-Split or Single Tilt Rod</h4></div>
-							<div class="col text-center"></div>
-							<div class="col text-center">
-								<img class="clicktoact get_dev_tilt_split" src="<?php echo get_stylesheet_directory_uri().'/assets/product-images/combine-images/single-or-split-tilt-rod/0.png';?>">
-								<label>Split</label>
-							</div>
-							<div class="col text-center">
-								<img class="clicktoact get_dev_tilt_split" src="<?php echo get_stylesheet_directory_uri().'/assets/product-images/combine-images/single-or-split-tilt-rod/1.png';?>">
-								<label>Single Tilt</label>
-							</div>
-							<div class="col text-center"></div>
-						</div>
-						<?php } ?>
 					</div>
 					<div class="twopart_custom_section_right col-lg-12 col-12 col-md-6">
 						<!--Slide 2 Right start -->
