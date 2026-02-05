@@ -899,6 +899,32 @@ function hwn_add_custom_option(){
        ?>
        <script>
 jQuery(document).ready(function($){
+	// Ensure all images have an alt attribute for SEO/accessibility.
+	function setMissingImgAlts(context) {
+		$(context).find('img').each(function() {
+			var $img = $(this);
+			var alt = $img.attr('alt');
+			if (alt && alt.trim().length > 0) {
+				return;
+			}
+			var labelText = $img
+				.closest('.ywapophpesperto, .col, .col-sm-2, .col-sm-4, .col-sm-6, .col-sm-12')
+				.find('label, .selection_phpesperto_label1, .selection_phpesperto_label2')
+				.first()
+				.text()
+				.trim();
+			if (!labelText) {
+				var src = $img.attr('src') || '';
+				var file = src.split('/').pop().split('?')[0];
+				labelText = file
+					? file.replace(/[-_]+/g, ' ').replace(/\.[a-z0-9]+$/i, '').trim()
+					: 'custom shutter shape';
+			}
+			$img.attr('alt', labelText);
+		});
+	}
+
+	setMissingImgAlts(document);
   $(".section_selection_phpesperto h3").click(function(){
     $(this).next().slideToggle();
   });
@@ -1565,8 +1591,8 @@ function add_input_box_to_product_page(){
 				$('td#wapo-total-order-price').html(finalPrice);
 			});
 			
-			$('div#yith-wapo-addon-37 .addon-header h3.wapo-addon-title').after('<img src="/wp-content/uploads/2020/10/width.png">');
-			$('div#yith-wapo-addon-39 .addon-header h3.wapo-addon-title').after('<img src="/wp-content/uploads/2020/10/height.png">');
+			$('div#yith-wapo-addon-37 .addon-header h3.wapo-addon-title').after('<img src="/wp-content/uploads/2020/10/width.png" alt="Width">');
+			$('div#yith-wapo-addon-39 .addon-header h3.wapo-addon-title').after('<img src="/wp-content/uploads/2020/10/height.png" alt="Height">');
 			
 			jQuery('.yith-wapo-addon select option:not(:first-child)').append('"');
 		});
