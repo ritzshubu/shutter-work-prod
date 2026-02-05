@@ -1539,17 +1539,7 @@ function add_input_box_to_product_page(){
 				var heigtprice = $('#heightselection').val()/12;
 				var widthprice = $('#widthselection').val()/12;
 				var sqftGet = heigtprice*widthprice;
-				var finalPrice = heigtprice*widthprice*30;
-				if ($("body").hasClass("postid-9257") || $("body").hasClass("postid-10017") || $("body").hasClass("postid-10023") || $("body").hasClass("postid-10054") || $("body").hasClass("postid-10057")) {
-				  if(sqftGet<6){
-						finalPrice = 6*30;
-					}
-				}
-				else{
-					if(sqftGet<6){
-						finalPrice = 6*30;
-					}
-				}
+				var finalPrice = sqftGet * 30;
 				
 				finalPrice = '$'+finalPrice.toFixed(2);
 				
@@ -1741,24 +1731,51 @@ jQuery(document).ready(function($){
 		$('#showselecteddata li').remove(); 
 		for (const [index, value] of Object.entries(arrayObject)) {
 			$('#showselecteddata').append('<li><strong>'+index+': </strong> '+value+'</li>');
-
-				var heigtprice = parseFloat($('.get_dev_height_inches').val())/12;
-				var widthprice = parseFloat($('.get_dev_width_inches').val())/12;
-				var sqftGet = heigtprice*widthprice;
-				var finalPrice = heigtprice*widthprice*30;
-			console.log(sqftGet);
-			console.log(finalPrice);
-				if(sqftGet<6){
-					finalPrice = 6*30;
-				}
-				if(finalPrice<250){
-					finalPrice = 250;
-				}
-				$('.yith-wapo-form-style-custom').attr('data-order-price',finalPrice.toFixed(2))
-				$('.yith-wapo-form-style-custom').attr('data-product-price',finalPrice.toFixed(2))
-				finalPrice = ': $'+finalPrice.toFixed(2);
-				$('span#cal_price_dev').html(finalPrice);
 		}
+
+		function parseFraction(fraction) {
+			if (!fraction || fraction === '0') {
+				return 0;
+			}
+			var parts = fraction.split('/');
+			if (parts.length !== 2) {
+				return 0;
+			}
+			var num = parseFloat(parts[0]);
+			var den = parseFloat(parts[1]);
+			if (isNaN(num) || isNaN(den) || den === 0) {
+				return 0;
+			}
+			return num / den;
+		}
+
+		function getInches(wholeVal, fractionVal) {
+			var whole = parseFloat(wholeVal);
+			if (isNaN(whole)) {
+				whole = 0;
+			}
+			return whole + parseFraction(fractionVal);
+		}
+
+		var heightWhole = (typeof wholeInch !== 'undefined' && wholeInch.b) ? wholeInch.b : $('.get_dev_height_inches').val();
+		var heightFraction = (typeof decimalInch !== 'undefined' && decimalInch.b) ? decimalInch.b : $('.get_dev_height2_inches').val();
+		var widthWhole = (typeof wholeInch !== 'undefined' && wholeInch.a) ? wholeInch.a : $('.get_dev_width_inches').val();
+		var widthFraction = (typeof decimalInch !== 'undefined' && decimalInch.a) ? decimalInch.a : $('.get_dev_width2_inches').val();
+
+		var heightInches = getInches(heightWhole, heightFraction);
+		var widthInches = getInches(widthWhole, widthFraction);
+		var finalPriceValue = 0;
+
+		if (heightInches > 0 && widthInches > 0) {
+			var heigtprice = heightInches / 12;
+			var widthprice = widthInches / 12;
+			var sqftGet = heigtprice * widthprice;
+			finalPriceValue = sqftGet * 30;
+		}
+
+		$('.yith-wapo-form-style-custom').attr('data-order-price', finalPriceValue.toFixed(2));
+		$('.yith-wapo-form-style-custom').attr('data-product-price', finalPriceValue.toFixed(2));
+		$('span#cal_price_dev').html(': $' + finalPriceValue.toFixed(2));
 	}
 	let ulHtml = '';
 	var arrayObject = [];
