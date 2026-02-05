@@ -1540,6 +1540,9 @@ function add_input_box_to_product_page(){
 				var widthprice = $('#widthselection').val()/12;
 				var sqftGet = heigtprice*widthprice;
 				var finalPrice = sqftGet * 30;
+				if (finalPrice < 250) {
+					finalPrice = 250;
+				}
 				
 				finalPrice = '$'+finalPrice.toFixed(2);
 				
@@ -1771,6 +1774,9 @@ jQuery(document).ready(function($){
 			var widthprice = widthInches / 12;
 			var sqftGet = heigtprice * widthprice;
 			finalPriceValue = sqftGet * 30;
+			if (finalPriceValue < 250) {
+				finalPriceValue = 250;
+			}
 		}
 
 		$('.yith-wapo-form-style-custom').attr('data-order-price', finalPriceValue.toFixed(2));
