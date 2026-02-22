@@ -899,6 +899,32 @@ function hwn_add_custom_option(){
        ?>
        <script>
 jQuery(document).ready(function($){
+	// Ensure all images have an alt attribute for SEO/accessibility.
+	function setMissingImgAlts(context) {
+		$(context).find('img').each(function() {
+			var $img = $(this);
+			var alt = $img.attr('alt');
+			if (alt && alt.trim().length > 0) {
+				return;
+			}
+			var labelText = $img
+				.closest('.ywapophpesperto, .col, .col-sm-2, .col-sm-4, .col-sm-6, .col-sm-12')
+				.find('label, .selection_phpesperto_label1, .selection_phpesperto_label2')
+				.first()
+				.text()
+				.trim();
+			if (!labelText) {
+				var src = $img.attr('src') || '';
+				var file = src.split('/').pop().split('?')[0];
+				labelText = file
+					? file.replace(/[-_]+/g, ' ').replace(/\.[a-z0-9]+$/i, '').trim()
+					: 'Shutter option';
+			}
+			$img.attr('alt', labelText);
+		});
+	}
+
+	setMissingImgAlts(document);
   $(".section_selection_phpesperto h3").click(function(){
     $(this).next().slideToggle();
   });
@@ -1553,7 +1579,7 @@ function add_input_box_to_product_page(){
 				var heigtprice = roundToHalfFoot($('#heightselection').val());
 				var widthprice = roundToHalfFoot($('#widthselection').val());
 				var sqftGet = heigtprice*widthprice;
-				var finalPrice = sqftGet * 30;
+				var finalPrice = sqftGet * 40;
 				if (finalPrice < 250) {
 					finalPrice = 250;
 				}
@@ -1565,8 +1591,8 @@ function add_input_box_to_product_page(){
 				$('td#wapo-total-order-price').html(finalPrice);
 			});
 			
-			$('div#yith-wapo-addon-37 .addon-header h3.wapo-addon-title').after('<img src="/wp-content/uploads/2020/10/width.png">');
-			$('div#yith-wapo-addon-39 .addon-header h3.wapo-addon-title').after('<img src="/wp-content/uploads/2020/10/height.png">');
+			$('div#yith-wapo-addon-37 .addon-header h3.wapo-addon-title').after('<img src="/wp-content/uploads/2020/10/width.png" alt="Width">');
+			$('div#yith-wapo-addon-39 .addon-header h3.wapo-addon-title').after('<img src="/wp-content/uploads/2020/10/height.png" alt="Height">');
 			
 			jQuery('.yith-wapo-addon select option:not(:first-child)').append('"');
 		});
@@ -1607,7 +1633,7 @@ function add_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
 
 			$cart_item_data['new_selection_price'] = (float)$createPrice;
 			if($getSqft<=5){
-				$cart_item_data['custom_shipping_add'] = 25;
+				$cart_item_data['custom_shipping_add'] = 35;
 			}
 			else if($getSqft>5 && $getSqft<16){
 				$cart_item_data['custom_shipping_add'] = 65;
