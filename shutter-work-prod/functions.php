@@ -18,6 +18,18 @@ function enqueue_child_theme_styles() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_child_theme_styles');
 
+// Add product article to the add to cart form
+function ss_product_article(){
+    if( function_exists('get_field') ){
+        $product_article_content = get_field('product_article_content');
+        if( $product_article_content ){
+            echo '<div class="product-article">';
+            echo wp_kses_post( $product_article_content );
+            echo '</div>';
+        }
+    }
+}
+
 /**
  * WooCommerce customization file
  */
@@ -1516,7 +1528,7 @@ function before_calculate_totals( $cart_obj ) {
 			if( isset( $value['custom_shipping_add'] ) ) {
 				$price = $value['custom_shipping_add']+$price;
 			}
-			$value['data']->set_price( ( $shippingPrice ) );
+			$value['data']->set_price( ( $price ) );
         }
     }
 }
@@ -1699,7 +1711,7 @@ function getposts_saurav_func( $atts ){
 	<?php
 	 endwhile;
 	echo '</div>';
-	if($atts['number']){
+	if(isset($atts['number'])){
 	echo '<div class="main_col_custom_paginate">';
 		pagination_bar( $loop );
 		echo '</div>';
@@ -2498,8 +2510,8 @@ function product_custom_content() {
 					<div class="twopart_custom_section_left col-lg-12 col-12 col-md-12">
 					<div class="wd-breadcrumbs">
 					<nav class="woocommerce-breadcrumb" aria-label="Breadcrumb">				
-						<a href="<?php echo site_url(); ?>" class="breadcrumb-link">Home</a>
-						<a href="<?php echo site_url(); ?>/product-category/custom-plantation-shutters/" class="breadcrumb-link breadcrumb-link-last">Custom Plantation Shutters</a>
+						<a href="<?php echo site_url(); ?>" class="breadcrumb-link">Home &gt; </a>
+						<a href="<?php echo site_url(); ?>/product-category/custom-plantation-shutters/" class="breadcrumb-link breadcrumb-link-last">Custom Plantation Shutters &gt; </a>
 							<span class="breadcrumb-last"><?php echo get_the_title(); ?></span>
 			</nav>				</div>
 					<h1 class="product_title entry-title wd-entities-title"><?php echo get_the_title(); ?></h1>
@@ -2585,6 +2597,7 @@ function product_custom_content() {
 				<button data-class="product_single_custom_slide2" class="validate slide1_button product_custom_button">
 					Next
 				</button>
+				<?php ss_product_article(); ?>
 			</div>	
 			<!--Slide 1 div end -->
 			<!--Slide 2 div start -->
